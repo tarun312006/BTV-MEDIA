@@ -1024,34 +1024,34 @@ async function renderCard(props = {}) {
   // Header Right: Telugu date in Noto Sans Telugu / Mandali
   const dateText = formatTeluguDate(cardData.date || cardData.publishedAt);
   ctx.fillStyle = '#FFFFFF';
-  ctx.font = '700 33px "Noto Sans Telugu", "Mandali", sans-serif';
+  ctx.font = '700 32px "Noto Sans Telugu", "Mandali", sans-serif';
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
   ctx.fillText(dateText, canvas.width - headerPaddingX, headerCenterY);
 
-  const measuredDateWidth = ctx.measureText(dateText).width;
-  const maxHeaderLeftWidth = canvas.width - (headerPaddingX * 2) - measuredDateWidth - 36;
+  const maxHeaderWidth = canvas.width - (headerPaddingX * 2);
 
-  // Header Left Text Elements (Clearly BIG, EXTRA-BOLD BTV tagline & bold highlighted reporter name)
+  // Line 1: FIXED "BTV — TRUE NEWS FOR PEOPLE" (Always fully displayed, never truncated/shortened)
+  const btvTagline = 'BTV — TRUE NEWS FOR PEOPLE';
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = '900 42px "Roboto", "Noto Sans Telugu", sans-serif';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+
   if (reporterLine) {
-    // 1. Tagline: "BTV — TRUE NEWS FOR PEOPLE" (+20% size increase to 46px, EXTRA-BOLD 900 weight)
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = '900 46px "Roboto", "Noto Sans Telugu", sans-serif';
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'middle';
-    const displayTagline = fitHeaderLeftText(ctx, 'BTV — TRUE NEWS FOR PEOPLE', maxHeaderLeftWidth);
-    ctx.fillText(displayTagline, headerPaddingX, 52);
+    // 1. Tagline: "BTV — TRUE NEWS FOR PEOPLE" on Line 1
+    ctx.fillText(btvTagline, headerPaddingX, 52);
 
-    // 2. Under Tagline: "🎙 Reporter Name — Designation"
-    // Reporter name: +40% size increase to 40px, BOLD/HIGHLIGHTED (800 weight)
-    // Designation: clearly readable 30px (500 weight, not as bold as name)
+    // 2. Line 2 (Under Tagline): "🎙 Reporter Name — Designation"
+    // Reporter name: BOLD/HIGHLIGHTED (800 weight, 38px)
+    // Designation: clearly readable (500 weight, 30px)
     if (repName && repDesig) {
       let curX = headerPaddingX;
       const micStr = '🎙 ';
-      ctx.font = '800 40px "Noto Sans Telugu", "Roboto", sans-serif';
+      ctx.font = '800 38px "Noto Sans Telugu", "Roboto", sans-serif';
       const micW = ctx.measureText(micStr).width;
 
-      ctx.font = '800 40px "Noto Sans Telugu", "Roboto", sans-serif';
+      ctx.font = '800 38px "Noto Sans Telugu", "Roboto", sans-serif';
       const nameW = ctx.measureText(repName).width;
 
       const sepStr = ' — ';
@@ -1063,10 +1063,10 @@ async function renderCard(props = {}) {
 
       const totalRepWidth = micW + nameW + sepW + desigW;
 
-      if (totalRepWidth <= maxHeaderLeftWidth) {
-        // Draw icon + bold highlighted reporter name (800 weight, 40px)
+      if (totalRepWidth <= maxHeaderWidth) {
+        // Draw icon + bold highlighted reporter name (800 weight, 38px)
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = '800 40px "Noto Sans Telugu", "Roboto", sans-serif';
+        ctx.font = '800 38px "Noto Sans Telugu", "Roboto", sans-serif';
         ctx.fillText(micStr + repName, curX, 126);
         curX += micW + nameW;
 
@@ -1081,27 +1081,22 @@ async function renderCard(props = {}) {
         ctx.font = '500 30px "Noto Sans Telugu", "Roboto", sans-serif';
         ctx.fillText(repDesig, curX, 126);
       } else {
-        // Truncate gracefully if exceeds maxWidth
-        ctx.font = '800 40px "Noto Sans Telugu", "Roboto", sans-serif';
-        const displayRep = fitHeaderLeftText(ctx, `🎙 ${repName} — ${repDesig}`, maxHeaderLeftWidth);
+        // Truncate reporter line gracefully if exceeds maxHeaderWidth
+        ctx.font = '800 38px "Noto Sans Telugu", "Roboto", sans-serif';
+        const displayRep = fitHeaderLeftText(ctx, `🎙 ${repName} — ${repDesig}`, maxHeaderWidth);
         ctx.fillStyle = '#FFFFFF';
         ctx.fillText(displayRep, headerPaddingX, 126);
       }
     } else {
       const singleText = repName ? `🎙 ${repName}` : `🎙 ${repDesig}`;
-      ctx.font = '800 40px "Noto Sans Telugu", "Roboto", sans-serif';
+      ctx.font = '800 38px "Noto Sans Telugu", "Roboto", sans-serif';
       ctx.fillStyle = '#FFFFFF';
-      const displayRep = fitHeaderLeftText(ctx, singleText, maxHeaderLeftWidth);
+      const displayRep = fitHeaderLeftText(ctx, singleText, maxHeaderWidth);
       ctx.fillText(displayRep, headerPaddingX, 126);
     }
   } else {
-    // Graceful fallback when no reporter details are saved: Big, bold & prominent tagline (50px, 900 weight)
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = '900 50px "Roboto", "Noto Sans Telugu", sans-serif';
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'middle';
-    const displayTagline = fitHeaderLeftText(ctx, 'BTV — TRUE NEWS FOR PEOPLE', maxHeaderLeftWidth);
-    ctx.fillText(displayTagline, headerPaddingX, headerCenterY);
+    // When reporter name is empty: Tagline is STILL completely displayed at full prominence
+    ctx.fillText(btvTagline, headerPaddingX, headerCenterY);
   }
 
   ctx.textAlign = 'left';
