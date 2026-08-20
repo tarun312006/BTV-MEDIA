@@ -933,3 +933,58 @@ button {
   border-radius: 6px;
   letter-spacing: 0.02em;
 }
+
+/* =========================================
+   NEWS CARD TOP HEADER
+   ========================================= */
+.card-header,
+.news-card-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 72px;
+  padding: 16px 22px 14px;
+  background: linear-gradient(90deg, #7C0A20 0%, #A10D1F 50%, #B4152A 100%);
+  border-bottom: 3px solid #E5122E;
+  box-sizing: border-box;
+}
+
+.header-main-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
+.btv-brand-title {
+  font-family: 'Roboto', 'Noto Sans Telugu', sans-serif;
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  white-space: nowrap;
+  flex-shrink: 0;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.reporter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  width: 100%;
+  min-width: 0;
+  font-size: 0.85rem;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.reporter-row:empty {
+  display: none;
+}
