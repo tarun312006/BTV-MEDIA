@@ -1247,21 +1247,70 @@ label,
 }
 
 /* =========================================
-   NEWS CARD HEADER
-   Keeps the BTV logo, brand name, tagline and date
-   in separate, non-overlapping columns.
+   NEWS CARD TOP HEADER
+   Fixed BTV Brand Title, Date & Independent Reporter Row
    ========================================= */
+.card-header,
 .news-card-header {
   position: relative;
   z-index: 1;
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 72px;
+  padding: 16px 22px 14px;
+  background: linear-gradient(90deg, #7C0A20 0%, #A10D1F 50%, #B4152A 100%);
+  border-bottom: 3px solid #E5122E;
+  box-sizing: border-box;
+}
+
+.header-main-row {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
-  min-height: 72px;
-  padding: 18px 22px 14px;
-  background: linear-gradient(90deg, #7C0A20 0%, #A10D1F 50%, #B4152A 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  width: 100%;
+  min-width: 0;
+}
+
+.btv-brand-title {
+  font-family: 'Roboto', 'Noto Sans Telugu', sans-serif;
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  white-space: nowrap;
+  flex-shrink: 0;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.card-date,
+.preview-date {
+  font-family: 'Noto Sans Telugu', 'Mandali', sans-serif;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.reporter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  width: 100%;
+  min-width: 0;
+  font-size: 0.85rem;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.reporter-row:empty {
+  display: none;
 }
 
 .header-left {
@@ -1315,15 +1364,6 @@ label,
   text-transform: uppercase;
   line-height: 1.2;
   white-space: nowrap;
-}
-
-.preview-date {
-  margin-left: auto;
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 0.78rem;
-  font-weight: 700;
-  white-space: nowrap;
-  align-self: center;
 }
 
 /* =========================================
